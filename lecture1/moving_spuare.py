@@ -12,8 +12,11 @@ square_color = (200, 30, 30)
 
 square_speed = 5
 
+WIDTH = 800
+HEIGHT = 600
+
 # Set window size
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 running = True
 
@@ -54,6 +57,17 @@ while running:
     # 3) Finally update square_x and square_y
     square_x += dx
     square_y += dy
+
+    # 4) Boundary Clamp
+    if square_x < 0:
+        square_x = 0
+    if square_x + square_size > WIDTH:
+        square_x = WIDTH - square_size
+    
+    if square_y < 0:
+        square_y = 0
+    if square_y + square_size > HEIGHT:
+        square_y = HEIGHT - square_size
 
     # 3) RENDER
     screen.fill((30, 30, 30)) # <-- Fills the entire window with dark greyish color
