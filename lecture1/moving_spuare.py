@@ -10,7 +10,7 @@ square_y = 300
 square_size = 50
 square_color = (200, 30, 30)
 
-square_speed = 5
+square_speed = 300
 
 WIDTH = 800
 HEIGHT = 600
@@ -24,6 +24,9 @@ clock = pygame.time.Clock() # <-- Event handler for FPS
 
 # Main game loop
 while running:
+    # Get Delta Time for movement smoothness
+    delta_time = clock.tick(120) / 1000
+
     # 1) EVENT HANDLING
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -54,9 +57,9 @@ while running:
         dx = dx / length * square_speed
         dy = dy / length * square_speed
 
-    # 3) Finally update square_x and square_y
-    square_x += dx
-    square_y += dy
+    # 3) Finally update square_x and square_y with delta time
+    square_x += dx * delta_time
+    square_y += dy * delta_time
 
     # 4) Boundary Clamp
     if square_x < 0:
@@ -76,6 +79,5 @@ while running:
     pygame.draw.rect(screen, square_color, (square_x, square_y, square_size, square_size))
 
     pygame.display.flip()
-    clock.tick(60)
 
 pygame.quit()
